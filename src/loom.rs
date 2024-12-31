@@ -202,7 +202,8 @@ mod inner {
         pub use core::sync::*;
 
         #[cfg(feature = "alloc")]
-        pub use alloc::sync::*;
+        pub use asyncs::sync::*;
+        // pub use alloc::sync::*;
     }
 
     #[cfg(feature = "std")]

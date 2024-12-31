@@ -390,9 +390,10 @@ feature! {
     use alloc::{
         collections::{VecDeque, BinaryHeap},
         string::String,
-        sync::Arc,
+        // sync::Arc,
         vec::Vec,
     };
+    use asyncs::sync::Arc;
 
     impl<T, R> Recycle<T> for Arc<R>
     where
