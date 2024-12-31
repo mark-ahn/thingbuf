@@ -1,9 +1,7 @@
 #![cfg(feature = "static")]
-use std::{
-    fmt::Write,
-    sync::atomic::{AtomicBool, Ordering},
-    thread,
-};
+// #[cfg(feature = "static")]
+use rss::sync::atomic::{AtomicBool, Ordering};
+use std::{fmt::Write, thread};
 use thingbuf::{recycling, StaticThingBuf};
 
 #[test]

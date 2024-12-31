@@ -247,12 +247,13 @@
 //! [blocking receiver]: blocking::Receiver
 //! [blocking sender]: blocking::Sender
 use crate::{
-    loom::{atomic::AtomicUsize, hint},
+    loom::hint,
     recycling::{take, Recycle},
     wait::{Notify, WaitCell, WaitQueue, WaitResult},
     Core, Ref, Slot,
 };
 use core::{fmt, task::Poll};
+use rss::sync::atomic::AtomicUsize;
 
 pub mod errors;
 use self::errors::{TryRecvError, TrySendError};

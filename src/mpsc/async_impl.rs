@@ -1,15 +1,12 @@
 use super::*;
-use crate::{
-    loom::atomic::{self, Ordering},
-    recycling,
-    wait::queue,
-};
+use crate::{recycling, wait::queue};
 use core::{
     future::Future,
     pin::Pin,
     task::{Context, Waker},
 };
 use errors::*;
+use rss::sync::atomic::{self, Ordering};
 
 feature! {
     #![feature = "alloc"]
@@ -840,7 +837,7 @@ feature! {
 #[cfg(not(all(loom, test)))]
 feature! {
     #![feature = "static"]
-    use crate::loom::atomic::AtomicBool;
+    use rss::sync::atomic::AtomicBool;
 
     /// A statically-allocated, asynchronous bounded MPSC channel.
     ///

@@ -1,8 +1,5 @@
 [workspace]
-members = [
-    ".",
-    "bench"
-]
+members = [".", "bench"]
 
 [package]
 name = "thingbuf"
@@ -29,15 +26,27 @@ static = []
 [dependencies]
 pin-project = "1"
 parking_lot = { version = "0.12", optional = true, default-features = false }
+rss = { git = "https://github.com/mark-ahn/rss", version = "0.4.5" }
+asyncs = { git = "https://github.com/mark-ahn/asyncs", version = "0.2.10", default-features = false, features = [
+    "alloc",
+] }
 
 [dev-dependencies]
-tokio = { version = "1.14.0", features = ["rt", "rt-multi-thread", "macros", "sync"] }
+tokio = { version = "1.14.0", features = [
+    "rt",
+    "rt-multi-thread",
+    "macros",
+    "sync",
+] }
 # So that we can use `poll_fn` in tests.
 futures-util = { version = "0.3", default-features = false }
 
 [target.'cfg(loom)'.dev-dependencies]
 loom = { version = "0.5.6", features = ["checkpoint", "futures"] }
-tracing-subscriber = { version = "0.3", default-features = false, features = ["std", "fmt"] }
+tracing-subscriber = { version = "0.3", default-features = false, features = [
+    "std",
+    "fmt",
+] }
 tracing = { version = "0.1", default-features = false, features = ["std"] }
 
 # Custom profile for Loom tests: enable release optimizations so that the loom

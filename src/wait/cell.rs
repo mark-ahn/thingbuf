@@ -1,11 +1,5 @@
 use crate::{
-    loom::{
-        atomic::{
-            AtomicUsize,
-            Ordering::{self, *},
-        },
-        cell::UnsafeCell,
-    },
+    loom::cell::UnsafeCell,
     util::{
         panic::{self, RefUnwindSafe, UnwindSafe},
         CachePadded,
@@ -13,6 +7,10 @@ use crate::{
     wait::{Notify, WaitResult},
 };
 use core::{fmt, ops};
+use rss::sync::atomic::{
+    AtomicUsize,
+    Ordering::{self, *},
+};
 
 /// An atomically registered waiter ([`Waker`] or [`Thread`]).
 ///
@@ -270,14 +268,11 @@ impl fmt::Debug for State {
 #[cfg(all(loom, test))]
 mod tests {
     use super::*;
-    use crate::loom::{
-        future,
-        sync::atomic::{AtomicUsize, Ordering::Relaxed},
-        thread,
-    };
+    use crate::loom::{future, thread};
     #[cfg(feature = "alloc")]
     use alloc::sync::Arc;
     use core::task::{Poll, Waker};
+    use rss::sync::atomic::{AtomicUsize, Ordering::Relaxed};
 
     struct Chan {
         num: AtomicUsize,

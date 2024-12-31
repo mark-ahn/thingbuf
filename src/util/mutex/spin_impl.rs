@@ -1,12 +1,11 @@
 #![cfg_attr(feature = "std", allow(dead_code))]
 use crate::{
-    loom::{
-        atomic::{AtomicBool, Ordering::*},
-        cell::{MutPtr, UnsafeCell},
-    },
+    loom::cell::{MutPtr, UnsafeCell},
     util::Backoff,
 };
 use core::{fmt, ops};
+// #[cfg_attr(feature = "std", allow(dead_code))]
+use rss::sync::atomic::{AtomicBool, Ordering::*};
 
 #[derive(Debug)]
 pub(crate) struct Mutex<T> {

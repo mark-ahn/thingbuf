@@ -4,8 +4,7 @@ pub(crate) use self::inner::*;
 mod inner {
 
     pub(crate) mod atomic {
-        pub use loom::sync::atomic::*;
-        pub use std::sync::atomic::Ordering;
+        use rss::sync::atomic::{Ordering, *};
     }
 
     pub(crate) use loom::{cell, future, hint, sync, thread};
@@ -36,13 +35,8 @@ mod inner {
         builder: loom::model::Builder,
         model: impl Fn() + Sync + Send + std::panic::UnwindSafe + 'static,
     ) {
-        use std::{
-            env, io,
-            sync::{
-                atomic::{AtomicBool, AtomicUsize, Ordering},
-                Once,
-            },
-        };
+        use rss::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
+        use std::{env, io, sync::Once};
         use tracing_subscriber::{filter::Targets, fmt, prelude::*};
         static IS_NOCAPTURE: AtomicBool = AtomicBool::new(false);
         static SETUP_TRACE: Once = Once::new();
@@ -211,8 +205,6 @@ mod inner {
         pub use alloc::sync::*;
     }
 
-    pub(crate) use core::sync::atomic;
-
     #[cfg(feature = "std")]
     pub use std::thread;
 
@@ -221,7 +213,7 @@ mod inner {
         pub(crate) fn spin_loop() {
             // MSRV: std::hint::spin_loop() stabilized in 1.49.0
             #[allow(deprecated)]
-            super::atomic::spin_loop_hint()
+            rss::sync::atomic::hint::spin_loop()
         }
     }
 

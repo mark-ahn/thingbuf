@@ -5,18 +5,16 @@
 //! rather than asynchronously yielding.
 use super::*;
 use crate::{
-    loom::{
-        atomic::{self, Ordering},
-        sync::Arc,
-        thread::{self, Thread},
-    },
+    loom::thread::{self, Thread},
     recycling::{self, Recycle},
     util::Backoff,
     wait::queue,
     MAX_CAPACITY,
 };
+use asyncs::sync::Arc;
 use core::{fmt, pin::Pin};
 use errors::*;
+use rss::sync::atomic::{self, Ordering};
 use std::time::{Duration, Instant};
 
 /// Returns a new synchronous multi-producer, single consumer (MPSC)
@@ -86,7 +84,7 @@ struct Inner<T, R> {
 feature! {
     #![feature = "static"]
 
-    use crate::loom::atomic::AtomicBool;
+    use rss::sync::atomic::AtomicBool;
 
     /// A statically-allocated, blocking bounded MPSC channel.
     ///

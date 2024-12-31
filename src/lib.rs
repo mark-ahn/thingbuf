@@ -36,13 +36,11 @@ feature! {
 }
 
 use crate::{
-    loom::{
-        atomic::{AtomicUsize, Ordering::*},
-        cell::{MutPtr, UnsafeCell},
-    },
+    loom::cell::{MutPtr, UnsafeCell},
     mpsc::errors::{TryRecvError, TrySendError},
     util::{Backoff, CachePadded},
 };
+use rss::sync::atomic::{AtomicUsize, Ordering::*};
 
 const HAS_READER: usize = 1 << (usize::BITS - 1);
 

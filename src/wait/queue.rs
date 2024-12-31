@@ -1,11 +1,9 @@
 use crate::{
-    loom::{
-        atomic::{AtomicUsize, Ordering::*},
-        cell::UnsafeCell,
-    },
+    loom::cell::UnsafeCell,
     util::{mutex::Mutex, CachePadded},
     wait::{Notify, WaitResult},
 };
+use rss::sync::atomic::{AtomicUsize, Ordering::*};
 
 use core::{fmt, marker::PhantomPinned, pin::Pin, ptr::NonNull};
 
@@ -645,11 +643,8 @@ unsafe impl<T: Send> Send for List<T> {}
 #[cfg(all(test, not(loom)))]
 mod tests {
     use super::*;
-    use std::sync::{
-        atomic::{AtomicBool, Ordering},
-        Arc,
-    };
-
+    use asyncs::sync::Arc;
+    use rss::sync::atomic::{AtomicBool, Ordering};
     #[derive(Debug, Clone)]
     struct MockNotify(Arc<AtomicBool>);
 
