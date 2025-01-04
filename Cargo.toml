@@ -3,7 +3,7 @@ members = [".", "bench"]
 
 [package]
 name = "thingbuf"
-version = "0.1.7-p1"
+version = "0.1.7-p2"
 edition = "2021"
 rust-version = "1.57.0"
 authors = ["Eliza Weisman <eliza@elizas.website>"]
@@ -27,7 +27,7 @@ static = []
 pin-project = "1"
 parking_lot = { version = "0.12", optional = true, default-features = false }
 rss = { git = "https://github.com/mark-ahn/rss", version = "0.4.5" }
-asyncs = { git = "https://github.com/mark-ahn/asyncs", version = "0.2.10", default-features = false, features = [
+asyncs = { git = "https://github.com/mark-ahn/asyncs", version = "0.3.1", default-features = false, features = [
     "alloc",
 ] }
 
