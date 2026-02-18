@@ -3,7 +3,7 @@ members = [".", "bench"]
 
 [package]
 name = "thingbuf"
-version = "0.1.7-p3"
+version = "0.1.7"
 edition = "2021"
 rust-version = "1.57.0"
 authors = ["Eliza Weisman <eliza@elizas.website>"]
@@ -17,6 +17,12 @@ keywords = ["lock-free", "queue", "channel", "mpsc", "pool"]
 categories = ["asynchronous", "concurrency", "data-structures", "no-std"]
 exclude = ["/.github", "/.cargo", "/bin", "/bench", "/assets"]
 
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = [
+    'cfg(loom)',
+    'cfg(thingbuf_trace)',
+] }
+
 [features]
 std = ["alloc", "parking_lot"]
 alloc = []
@@ -26,13 +32,13 @@ static = []
 [dependencies]
 pin-project = "1"
 parking_lot = { version = "0.12", optional = true, default-features = false }
-rss = { git = "https://github.com/mark-ahn/rss", version = "0.4.5" }
-asyncs = { git = "https://github.com/mark-ahn/asyncs", version = "0.4.1-p001", default-features = false, features = [
+rss = { git = "https://github.com/mark-ahn/rss", version = "0.5.1" }
+asyncs = { git = "https://github.com/mark-ahn/asyncs", version = "0.5.0", default-features = false, features = [
     "alloc",
 ] }
 
 [dev-dependencies]
-tokio = { version = "1.45.0", features = [
+tokio = { version = "1.49.0", features = [
     "rt",
     "rt-multi-thread",
     "macros",
@@ -42,7 +48,7 @@ tokio = { version = "1.45.0", features = [
 futures-util = { version = "0.3", default-features = false }
 
 [target.'cfg(loom)'.dev-dependencies]
-loom = { version = "0.5.6", features = ["checkpoint", "futures"] }
+loom = { version = "0.7.2", features = ["checkpoint", "futures"] }
 tracing-subscriber = { version = "0.3", default-features = false, features = [
     "std",
     "fmt",
@@ -56,8 +62,8 @@ inherits = "test"
 lto = true
 opt-level = 3
 
-[patch.crates-io]
-loom = { git = "https://github.com/tokio-rs/loom", rev = "a93bf2390e0fcfdb7c5899b31db0e4e795ab4aab" }
+# [patch.crates-io]
+# loom = { git = "https://github.com/tokio-rs/loom", rev = "a93bf2390e0fcfdb7c5899b31db0e4e795ab4aab" }
 
 [package.metadata.docs.rs]
 all-features = true
